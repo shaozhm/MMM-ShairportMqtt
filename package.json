@@ -1,0 +1,33 @@
+{
+  "name": "shairport-sync-mqtt",
+  "version": "1.0.0",
+  "main": "bin/index.js",
+  "bin": {
+    "shairport-sync-mqtt": "bin/index.js"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "eslint": "8.16.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-jest": "26.2.2",
+    "eslint-plugin-jsdoc": "39.3.1",
+    "eslint-plugin-ui5": "0.1.0",
+    "jest": "28.1.0",
+    "jest-html-reporters": "2.1.7",
+    "jest-junit": "13.2.0"
+  },
+  "dependencies": {
+    "dotenv": "8.0",
+    "moment": "2.29.4",
+    "lodash": "4.17.21",
+    "mqtt": "^5.1.0",
+    "request": "2.88.2",
+    "uuid": "8.3.2",
+    "verror": "1.10.1",
+    "yargs": "13.2"
+  }
+}
