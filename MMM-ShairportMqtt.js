@@ -142,6 +142,9 @@ Module.register("MMM-ShairportMqtt",{
 				prgrInSec = songLength;
 			}
 			//update the progressbar
+			progEl.setAttribute("value", prgrInSec);
+			progEl.setAttribute("max", songLength);
+
       prgrLabel.innerHTML = this.secToTime(prgrInSec) + " - " + this.secToTime(songLength);
     } else if (!this.playing && this.progress) { //song was paused
 			let prData = this.progress;
