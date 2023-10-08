@@ -119,6 +119,8 @@ Module.register("MMM-ShairportMqtt",{
 		prgrLabel.innerHTML = "0:00 - 0:00";
 		metadata.appendChild(prgrLabel);
 
+		console.log('progress: ', this.progress);
+		
     if (this.progress && this.progress.length > 0 && this.playing) {
       //get the progress
 			let prData = this.progress;
@@ -148,7 +150,7 @@ Module.register("MMM-ShairportMqtt",{
 			progEl.setAttribute("max", songLength);
 
       prgrLabel.innerHTML = this.secToTime(prgrInSec) + " - " + this.secToTime(songLength);
-    } else if (!this.playing && this.progress) { //song was paused
+    } else if (!this.playing && this.progress && this.progress.length > 0) { //song was paused
 			let prData = this.progress;
 			let start   = this.getSec(prData[0]);
 			let current = this.getSec(prData[1]);
@@ -176,34 +178,33 @@ Module.register("MMM-ShairportMqtt",{
 			return wrapper;
     }
 
+		const titletag = document.createElement('div');
 		if (this.title && this.title.length > 30){
 			//Because the dom regenerates every second. The marque won't scroll
 			//I wasn't able to fix that
-			titletag = document.createElement('div');
 			titletag.style.fontSize = "10px";
-		}else{
-			titletag = document.createElement("div");
 		}
 
 		titletag.innerHTML = (this.title) ? this.title : "";
 		titletag.className = "bright";
 		metadata.appendChild(titletag)
 
-		var txt = "";
+		let txt = '';
 		if (this.artist || this.album){
-			txt = this.artist + " - " + this.album
+			txt = `${this.artist ? this.artist : ''} - ${this.album ? this.album : ''}`;
 		}
+		const artisttag = document.createElement('div');
 		if (txt.length > 50){
 			//Because the dom regenerates every second. The marque won't scroll
 			//I wasn't able to fix that
-			artisttag = document.createElement('div');
 			artisttag.style.fontSize = "10px";
-		}else{
-			artisttag = document.createElement('div');
 		}
+
 		artisttag.innerHTML = txt;
 		artisttag.className = "xsmall";
-		metadata.appendChild(artisttag)
+		if (this.artist || this.album){
+			metadata.appendChild(artisttag)
+		}
 
 		wrapper.appendChild(metadata);
 
