@@ -1,6 +1,7 @@
 const mqtt = require("mqtt");
 const Lodash = require('lodash');
 const client = mqtt.connect("mqtt://sonos.local");
+const rootTopic = 'shairport-sync/f1';
 
 const known_play_metadata_types = {
   title: 'text of song title',
@@ -25,6 +26,9 @@ const known_play_metadata_types = {
   play_end: 'fired at the end of every song',
   play_flush: 'fired when song is skipped or on positional change',
   play_resume: 'fired when song play resumes from pause',
+  service_name: 'service_name: f1',
+  output_frame_rate: 'output_frame_rate: 44100',
+  output_format: 'output_format: S32',
 }
 
 const known_ssnc_types = {
@@ -52,11 +56,14 @@ const known_ssnc_types = {
     down to -30.00, with -144.00 meaning "mute". This is linear on the volume 
     control slider of iTunes or iOS AirPlay. If the volume setting is being 
     ignored by Shairport Sync itself, the volume, lowest_volume and highest_volume values are zero.`,
-  snam: `a device e.g. "Joe's iPhone" has started a play session. Specifically, 
+  snam: `=client_name, a device e.g. "Joe's iPhone" has started a play session. Specifically, 
     it's the "X-Apple-Client-Name" string for AP1, or direct from the configuration Plist for AP2.`,
   snua: `a "user agent" e.g. "iTunes/12..." has started a play session. Specifically, it's the "User-Agent" string.`,
   stal: 'this is an error message meaning that reception of a large piece of metadata, usually a large picture, has stalled; bad things may happen.',
   svip: ' the payload is the IP address of the server, i.e. shairport-sync. Can be an IPv4 or an IPv6 address.',
+  ofps: '=output_frame_rate: 44100',
+  svoa: '=service_name: f1',
+  ofmt: '=output_formant: S32',
 }
 
 const known_core_types = {
@@ -87,7 +94,7 @@ const known_remote_commands = [
   "volumeup",
 ]
 
-const rootTopic = 'shairport-sync/f1';
+
 
 client.on("connect", () => {
   Lodash.each(Lodash.keys(known_play_metadata_types), (topic) => {

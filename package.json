@@ -21,8 +21,6 @@
     "jest-junit": "13.2.0"
   },
   "dependencies": {
-    "dotenv": "8.0",
-    "moment": "2.29.4",
     "lodash": "4.17.21",
     "mqtt": "^5.1.0",
     "request": "2.88.2",
