@@ -130,7 +130,9 @@ Module.register("MMM-ShairportMqtt",{
 
       let songLength = end - start;
       prData[1] = (parseInt(prData[1]) + 44100).toString(); //adds 1 sec of progress
-      console.log('current: ', prData[1]);
+      this.progress = prData;
+
+			var progEl = progressEl;
 			//Make sure that, when there's a bug or something else
 			//That the 'progress' won't go past the 'end' of the song.
 			if (prgrInSec >= songLength) {
