@@ -2,8 +2,6 @@ Module.register("MMM-ShairportMqtt",{
   defaults: {
     mqttServer: 'mqtt://sonos.local',
     topic: 'shairport-sync/f1',
-    interval: 150000,
-    debug: true,
     loadingText: '',
   },
 
@@ -27,14 +25,14 @@ Module.register("MMM-ShairportMqtt",{
       this.lastUpdate = new Date().getTime() / 1000;
 
       if (payload.topic === `${this.config.topic}/active_start`) {
-        this.playing == true;
+        this.playing = true;
         this.sendNotification('HIDE_CLOCK', {
           message: 'active_start',
         });
         this.show(1000);
       }
       if (payload.topic === `${this.config.topic}/active_end`) {
-        this.playing == false;
+        this.playing = false;
         this.sendNotification('SHOW_CLOCK', {
           message: 'active_end',
         });
@@ -211,7 +209,6 @@ Module.register("MMM-ShairportMqtt",{
 			"MMM-ShairportMqtt.css",
 		];
   },
-
 	//convert RTP timestamps to seconds (assuming music is 44100hz or 44khz)
 	//As stated in this section https://github.com/mikebrady/shairport-sync#more-information
 	//"The default is 44,100 samples per second / 16 bits"
