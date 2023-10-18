@@ -77,7 +77,7 @@ Module.register("MMM-ShairportMqtt",{
       this.sendNotification('SHOW_ALERT', payload);
     }
   },
-  getDom: function() {
+  getDom: function(){
 		var self = this;
 		var wrapper = document.createElement("div");
 		wrapper.className = this.config.classes ? this.config.classes : "small";
