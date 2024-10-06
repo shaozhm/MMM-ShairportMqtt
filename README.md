@@ -1,3 +1,14 @@
+### File Structure:
+``` text
+magic-mirror
+     |- config
+          |- config.js
+     |- modules
+          |- MMM-ShairportMqtt
+          |- MMM-FlipClock
+          |- MMM-connection-status
+```
+
 ### Steps:
 1. Add module into config.js
     ``` sh
