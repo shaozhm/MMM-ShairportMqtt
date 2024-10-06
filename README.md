@@ -4,7 +4,7 @@
     $> cd ./magic-mirror/config
     $> vi config.js
     ```
-  The config.js file:
+    The config.js file:
     ``` text
 
     ... ...
