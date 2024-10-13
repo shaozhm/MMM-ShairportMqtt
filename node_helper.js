@@ -1,5 +1,11 @@
 const NodeHelper = require('node_helper');
 const mqtt = require('mqtt');
+const Blynk = require('blynk-library');
+const Lodash = require('lodash');
+const piToken = 'BO9Ej28AzpoEsaCs0WXiS3mqSO2KE8mZ';
+const globalSwitchButtonPin = 1;
+const blynkServer = 'sonos.local';
+const blynkServerPort = 8442;
 
 module.exports = NodeHelper.create({
   start: function() {
@@ -47,6 +53,7 @@ module.exports = NodeHelper.create({
       client.subscribe(`${config.topic}/volume`);
       client.subscribe(`${config.topic}/client_name`);
       client.subscribe(`${config.topic}/ssnc/prgr`);
+      client.subscribe(`${config.buttonTopic}`);
       
       client.on('message', function(topic, message) {
         console.log('topic: ', topic);
@@ -55,6 +62,23 @@ module.exports = NodeHelper.create({
           topic,
           data,
         });
+
+        if (topic.startsWith('zigbee2mqtt')) {
+          console.log('button message', message.toString());
+          const btn = JSON.parse(message.toString());
+          const action = btn && btn.action === 'single' ? 1 : btn.action === 'double' ? 0 : null;
+          if (Lodash.isNumber(action)) {
+            const blynk = new Blynk.Blynk(piToken, options = {
+              connector : new Blynk.TcpClient( options = { addr: blynkServer, port: blynkServerPort })
+            });
+            blynk.on('connect', () => {
+              const bridge = new blynk.WidgetBridge(99);
+              bridge.setAuthToken(piToken);
+              bridge.virtualWrite(globalSwitchButtonPin, action);
+              blynk.disconnect(false);
+            });
+          }
+        }
       });
     }
   },
