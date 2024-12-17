@@ -66,7 +66,7 @@ module.exports = NodeHelper.create({
         if (topic.startsWith('zigbee2mqtt')) {
           console.log('button message', message.toString());
           const btn = JSON.parse(message.toString());
-          const action = btn && btn.action === 'single' ? 1 : btn.action === 'double' ? 0 : null;
+          const action = btn && btn.action === 'single' ? 1 : btn.action === 'double' || btn.action === 'triple' || btn.action === 'quadruple' ? 0 : null;
           if (Lodash.isNumber(action)) {
             const blynk = new Blynk.Blynk(piToken, options = {
               connector : new Blynk.TcpClient( options = { addr: blynkServer, port: blynkServerPort })
