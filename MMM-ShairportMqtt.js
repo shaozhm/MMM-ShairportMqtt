@@ -3,7 +3,6 @@ Module.register("MMM-ShairportMqtt",{
     mqttServer: 'mqtt://sonos.local',
     topic: 'shairport-sync/f1',
     loadingText: '',
-		buttonTopic: 'zigbee2mqtt/music-button',
   },
 
 	start: function() {
@@ -16,7 +15,6 @@ Module.register("MMM-ShairportMqtt",{
     self.sendSocketNotification('MQTT_SERVER', {
       mqttServer: self.config.mqttServer,
       topic: self.config.topic,
-			buttonTopic: self.config.buttonTopic,
     });
 		setInterval(() => {
 			this.updateDom(0);
